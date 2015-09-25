@@ -1,0 +1,30 @@
+{
+  "name": "d3",
+  "version": "1.0.0",
+  "description": "Sample code of d3",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yachao/d3.git"
+  },
+  "keywords": [
+    "d3"
+  ],
+  "author": "zc",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yachao/d3/issues"
+  },
+  "homepage": "https://github.com/yachao/d3#readme",
+  "dependencies": {
+    "d3": "3.x"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-uglify": "^1.4.0",
+    "gulp-webpack": "^1.5.0"
+  }
+}

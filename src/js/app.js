@@ -251,35 +251,66 @@ var d3 = require('d3');
 //     sortttt()
 // });
 
-var start = new Date(2013, 0, 1), // <-A 
-    end = new Date(2013, 11, 31),
-    range = [0, 1200],
-    time = d3.time.scale().domain([start, end]) // <-B
-        .rangeRound(range), // <-C
-    max = 12,
-    data = [];
+// var start = new Date(2013, 0, 1), // <-A 
+//     end = new Date(2013, 11, 31),
+//     range = [0, 1200],
+//     time = d3.time.scale().domain([start, end]) // <-B
+//         .rangeRound(range), // <-C
+//     max = 12,
+//     data = [];
     
-for (var i = 0; i < max; ++i){ // <-D
-    var date = new Date(start.getTime());
-    date.setMonth(start.getMonth() + i);
-    data.push(date);
-}
-function render(data, scale, selector) { // <-E
-    d3.select(selector).selectAll("div.fixed-cell")
+// for (var i = 0; i < max; ++i){ // <-D
+//     var date = new Date(start.getTime());
+//     date.setMonth(start.getMonth() + i);
+//     data.push(date);
+// }
+// function render(data, scale, selector) { // <-E
+//     d3.select(selector).selectAll("div.fixed-cell")
+//                 .data(data)
+//             .enter()
+//                 .append("div").classed("fixed-cell", true);
+//     d3.select(selector).selectAll("div.fixed-cell")
+//                 .data(data)
+//             .exit().remove();
+//     d3.select(selector).selectAll("div.fixed-cell")
+//                 .data(data)
+//             .style("margin-left", function(d){ // <-F
+//                 return scale(d) + "px";
+//             })
+//             .html(function (d) { // <-G
+//                 var format = d3.time.format("%x"); // <-H
+//                 return format(d) + "<br>" + scale(d) + "px";
+//             });
+// }
+// render(data, time, "#time");
+
+var max = 10, data = [];
+for (var i = 0; i < max; ++i) data.push(i);
+
+var alphabet = d3.scale.ordinal()
+    .domain(data)
+    .range(["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"]);
+    
+function render(data, scale, selector) {
+    d3.select(selector).selectAll("div.cell")
                 .data(data)
-            .enter()
-                .append("div").classed("fixed-cell", true);
-    d3.select(selector).selectAll("div.fixed-cell")
+            .enter().append("div").classed("cell", true);
+    d3.select(selector).selectAll("div.cell")
                 .data(data)
             .exit().remove();
-    d3.select(selector).selectAll("div.fixed-cell")
+    d3.select(selector).selectAll("div.cell")
                 .data(data)
-            .style("margin-left", function(d){ // <-F
-                return scale(d) + "px";
+            .style("display", "inline-block")
+            .style("background-color", function(d){
+                return scale(d).indexOf("#")>=0?scale(d):"white";
             })
-            .html(function (d) { // <-G
-                var format = d3.time.format("%x"); // <-H
-                return format(d) + "<br>" + scale(d) + "px";
+            .text(function (d) {
+                return scale(d);
             });
 }
-render(data, time, "#time");
+render(data, alphabet, "#alphabet");
+render(data, d3.scale.category10(), "#category10");
+render(data, d3.scale.category20(), "#category20");
+render(data, d3.scale.category20b(), "#category20b");
+render(data, d3.scale.category20c(), "#category20c");
+
